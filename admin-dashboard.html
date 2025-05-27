@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="admin-dashboard">
+    <header>
+      <h1>📊 Admin Dashboard</h1>
+      <button onclick="logoutAdmin()">🚪 Log Out</button>
+    </header>
+
+    <section class="dashboard-content">
+      <div class="card">
+        <h2>All Quiz Results</h2>
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Score</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Results will be populated here -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2>Leaderboard 🏆</h2>
+        <ol id="leaderboard">
+          <!-- Leaderboard entries will be populated here -->
+        </ol>
+      </div>
+
+      <div class="card">
+        <button onclick="resetAllData()">🗑️ Reset All Quiz Data</button>
+        <button onclick="exportResults()">📥 Download Results</button>
+        <button onclick="downloadFullHistory()">📄 Download Full Log</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

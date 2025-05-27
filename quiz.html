@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bible Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   <button id="submit-btn" style="float: right; margin: 20px; display: none;">Submit Quiz</button>
+  <div id="quiz-layout">
+    <div id="timer-sidebar">
+      <h3>Time Left</h3>
+      <div class="timer-container">
+        <div class="timer-bar" id="timer-bar"></div>
+      </div>
+      <p id="timer"><span id="time">20:00</span></p>
+    </div>
+
+    <div id="quiz-container">
+      <h2>Question:</h2>
+      <div id="question-container"></div>
+
+      <div style="margin-top: 20px;">
+        <button id="prev-btn">Previous</button>
+        <button id="next-btn">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        text: "How many children did Judah have?",
+        options: { A: "3", B: "4", C: "5", D: "6" },
+        answer: "B",
+      },
+      {
+        text: "Who was Jesus' grandfather?",
+        options: { A: "Anui", B: "Heli", C: "Joseph", D: "David" },
+        answer: "B",
+      },
+      {
+        text: "Which prophet confronted the King David after his sin with Bathsheba?",
+        options: { A: "Nathan", B: "Elijah", C: "Elisha", D: "Samuel" },
+        answer: "A",
+      },
+      {
+        text: "In the Song of Solomon, how much is the bride’s dowry?",
+        options: {
+          A: "5,000 silver pieces",
+          B: "10,000 silver pieces",
+          C: "2,000 silver pieces",
+          D: "1,000 silver pieces",
+        },
+        answer: "D",
+      },
+      {
+        text: "The high priest of Jerusalem that put Jesus on trial, what was his name",
+        options: { A: "Herod", B: "Pilate", C: "Caiaphas", D: "Ceasar" },
+        answer: "C",
+      },
+      {
+        text: "Which book comes directly after the Gospels?",
+        options: { A: "Romans", B: "Acts", C: "Exodus", D: "Revelation" },
+        answer: "B",
+      },
+      {
+        text: "How many plagues are in exodus?",
+        options: { A: "6", B: "10", C: "7", D: "12" },
+        answer: "B",
+      },
+      {
+        text: "How many books are in the Bible?",
+        options: { A: "66", B: "72", C: "39", D: "27" },
+        answer: "A",
+      },
+      {
+        text: "Which group was the ruling council of the Jews that plotted Jesus’ death?",
+        options: {
+          A: "The Manhattan",
+          B: "The Sanhedrin",
+          C: "Ceasar's Army",
+          D: "The Jews",
+        },
+        answer: "B",
+      },
+      {
+        text: "Paul is from what tribe?",
+        options: { A: "Judah", B: "Levi", C: "Joseph", D: "Benjamin" },
+        answer: "D",
+      },
+      {
+        text: "Jesus’ meeting of a woman at Jacob’s well was in which town?",
+        options: { A: "Sychar", B: "Capernaum", C: "Galilee", D: "Haran" },
+        answer: "A",
+      },
+      {
+        text: "At the time of Jesus’ birth, which roman was in charge of cultivation at Syria?",
+        options: { A: "Sychar", B: "Cyrenius", C: "Hananiel", D: "Aquilla" },
+        answer: "B",
+      },
+      {
+        text: "What is the name of the well Abraham and Abimelech fought over?",
+        options: {
+          A: "Bathsheba",
+          B: "Beersheba",
+          C: "Sheba",
+          D: "The wilderness and the land of Sodom",
+        },
+        answer: "B",
+      },
+      {
+        text: "Which place is called “Zion” and “the city of David”?",
+        options: { A: "Judaea", B: "Galilee", C: "Hebron", D: "Jerusalem" },
+        answer: "D",
+      },
+      {
+        text: "Who was the first high priest of Israel?",
+        options: { A: "Aaron", B: "Eliezer", C: "Phinehas", D: "Melchizedek" },
+        answer: "A",
+      },
+      {
+        text: "Which king of Judah was struck with leprosy for usurping the role of a priest?",
+        options: { A: "Uzziah", B: "Hezekiah", C: "Manasseh", D: "Josiah" },
+        answer: "A",
+      },
+      {
+        text: "Lebanon was popular for which kind of tree?",
+        options: {
+          A: "Poplar Tree",
+          B: "Fig Tree",
+          C: "Cedar Tree",
+          D: "Shale Tree",
+        },
+        answer: "C",
+      },
+      {
+        text: "What illness was Mephibosheth suffering from?",
+        options: { A: "Lameness", B: "Leprosy", C: "Blindness", D: "Dumbness" },
+        answer: "B",
+      },
+      {
+        text: "Timotheus grandmother was called?",
+        options: { A: "Lois", B: "Maria", C: "Zeruja", D: "Bernice" },
+        answer: "A",
+      },
+      {
+        text: "Apostle Paul on the Areopagus or the execution of Jacob, which happened first?",
+        options: {
+          A: "The execution of Judah",
+          B: "Both",
+          C: "The execution of Jacob",
+          D: "Apostle Paul on the Areopagus",
+        },
+        answer: "C",
+      },
+      {
+        text: "Peter’s first letter was addressed to who?",
+        options: {
+          A: "Timotheus",
+          B: "Dispersed Christians",
+          C: "Dispersed Strangers",
+          D: "The church in Corinth",
+        },
+        answer: "C",
+      },
+      {
+        text: "Which prophet predicted a ruler out of Bethlehem Ephrathah?",
+        options: {
+          A: "Prophet Micah",
+          B: "Prophet Isaiah",
+          C: "Prophet Zechariah",
+          D: "John the baptist",
+        },
+        answer: "A",
+      },
+      {
+        text: "What is the name of David’s chief counselor?",
+        options: { A: "Ahithophel", B: "Harbonah", C: "Nathan", D: "Micaiah" },
+        answer: "A",
+      },
+      {
+        text: "David wrote the entire book of Psalms",
+        options: { A: "True", B: "False" },
+        answer: "B",
+      },
+      {
+        text: "Which human author wrote the most books?",
+        options: { A: "David (150)", B: "Paul (15)", C: "Daniel (14)", D: "Paul (13)" },
+        answer: "D",
+      },
+      {
+        text: "The spies sent into the land of Canaan, what did they see that made them scared?",
+        options: { A: "Lions", B: "A great army", C: "The soldeirs", D: "Giants" },
+        answer: "D",
+      },
+      {
+        text: "How many people saw Jesus after he came back from the dead?",
+        options: {
+          A: "Over 100 people",
+          B: "Below 100 people",
+          C: "Over 500 people",
+          D: "Below 500 people",
+        },
+        answer: "C",
+      },
+      {
+        text: "Where did Peter stay during his ministry in the city of Joppa?",
+        options: {
+          A: "In the house of Simon the tanner",
+          B: "In the church at Joppa",
+          C: "At Talitha Dorcas' House",
+          D: "At the temple in Genasaret",
+        },
+        answer: "A",
+      },
+      {
+        text: "What was the name of Job’s mother?",
+        options: { A: "Lois", B: "Maria", C: "Zeruja", D: "Bernice" },
+        answer: "C",
+      },
+      {
+        text: "Ezra had what job position in Israel?",
+        options: {
+          A: "Land Surveyor",
+          B: "Land Seller",
+          C: "Chief Cultivator",
+          D: "Land Cultivator",
+        },
+        answer: "D",
+      },
+      {
+        text: "What did Jacob call the place he fought God?",
+        options: { A: "Maranatha", B: "Peniel", C: "Bethel", D: "Rehoboth" },
+        answer: "B",
+      },
+      {
+        text: "Where in the bible can you find the Lord’s prayer?",
+        options: { A: "Matthew 3", B: "Matthew 8", C: "Matthew 5", D: "Matthew 6" },
+        answer: "D",
+      },
+      {
+        text: "How many deacons were chosen to help the apostles?",
+        options: { A: "5", B: "7", C: "12", D: "9" },
+        answer: "B",
+      },
+      {
+        text: "How many people was saved during the time of Noah's Ark?",
+        options: { A: "8", B: "10", C: "7", D: "12" },
+        answer: "A",
+      },
+      {
+        text: "What did Elijah do to call down fire on the soldiers?",
+        options: {
+          A: "Prayed to God",
+          B: "Casted fire from heaven",
+          C: "Called down fire from heaven",
+          D: "Prayed God to bring down fire",
+        },
+        answer: "C",
+      },
+      {
+        text: "Who was the great-grandfather of Samuel?",
+        options: { A: "Elihu", B: "Jeroham", C: "Zuph", D: "Rehoboam" },
+        answer: "A",
+      },
+      {
+        text: "What course was John the Baptist from?",
+        options: { A: "Israel", B: "Judah", C: "Levi", D: "Abia" },
+        answer: "D",
+      },
+      {
+        text: "What is the name of the village where Christ turned water into wine?",
+        options: { A: "Carmel", B: "Cana", C: "Sychar", D: "Jerusalem" },
+        answer: "B",
+      },
+      {
+        text: "The Apostle John wrote how many books?",
+        options: { A: "3", B: "4", C: "5", D: "6" },
+        answer: "C",
+      },
+      {
+        text: "In which town did Jesus drive an evil spirit out of a man who called him the Holy One of God?",
+        options: { A: "Capernaum", B: "Cana", C: "Sychar", D: "Jerusalem" },
+        answer: "A",
+      },
+      {
+        text: "Where was the book of 2 Timothy written?",
+        options: { A: "Crete", B: "Ephesus", C: "Corinth", D: "Rome"},
+        answer: "D"
+      },
+      {
+        text: "Paul, when speaking in 1 Timothy chapter 1, spoke of two people who put faith and a good conscience away. He then delivered them to satan so they will learn not to blaspheme. who were they?",
+        options: { A: "Ananias & Sapphira", B: "Korah & Abiram", C: "Alexander & Hymenaeus", D: "Artemas & Zenas"},
+        answer: "C",
+      },
+      {
+        text: "King Rehoboam has how many children?",
+        options: { A: "30", B: "88", C: "72", D: "56"},
+        answer: "B"
+      },
+      {
+        text: "Who was the first hunter mentioned in the Bible?",
+        options: { A: "Phinehas", B: "Nimrod", C: "Cain", D: "Abel"},
+        answer: "B"
+      },
+      {
+        text: "How many pairs of each “clean” animal did Noah take on the ark?",
+        options: { A: "7", B: "5", C: "12", D: "2"},
+        answer: "A"
+      },
+      {
+        text: "Where did David spare Saul’s life the first time?",
+        options: { A: "In between his army", B: "On the mountain", C: "In a cave", D: "When Saul slept"},
+        answer: "C"
+      },
+      {
+        text: "What does “Christ” mean?",
+        options: { A: "Master", B: "Anointed", C: "Chosen One", D: "Seed of David"},
+        answer: "B"
+      },
+      {
+        text: "What is the seventh commandment?",
+        options: { A: "Thou shalt not steal", B: "Thou shalt not kill", C: "Thou shalt not bear false witness against thy neighbor", D: "Thou shalt not commit adultery"},
+        answer: "D"
+      },
+      {
+        text: "Absalom was killed by who?",
+        options: { A: "Joab", B: "Benaiah", C: "Solomon", D: "David"},
+        answer: "A"
+      },
+      {
+        text: "How many times did the Bible describe Jesus spit as a part of his miracles?",
+        options: { A: "4 times", B: "3 times", C: "2 times", D: "1 time"},
+        answer: "B"
+      },
+      {
+        text: "What did Melchizedek give to Abram?",
+        options: { A: "Bread and Wine", B: "The offerings of Sodom", C: "Bread and water", D: "Unleavened Bread"},
+        answer: "A"
+      },
+      {
+        text: "Who was the father-in-law of Caiaphas, the high priest at the time of Jesus’ death?",
+        options: { A: "Hananiel", B: "Tychicus", C: "Ephurah", D: "Annas"},
+        answer: "D"
+      },
+      {
+        text: "Who escorted the slave with the letter to Philemon?",
+        options: { A: "Ephurah", B: "Paul", C: "Tychicus", D: "Silas"},
+        answer: "C"
+      },
+      {
+        text: "Who did God give his covenant of peace after he showed his zealousness for the kingdom by killing an Israelite and his concubine?",
+        options: { A: "Moses", B: "Paul", C: "Phinehas", D: "Tychicus"},
+        answer: "C"
+      },
+      {
+        text: "After Solomon’s rule, what happened to the kingdom?",
+        options: { A: "It was taken captive", B: "It was divided", C: "It was taken over", D: "It was wasted"},
+        answer: "B"
+      },
+      {
+        text: "Who went with Paul on his early missionary journey?",
+        options: { A: "Silas", B: "Barnabas", C: "Timothy", D: "Peter"},
+        answer: "B"
+      },
+      {
+        text: "Where in the Bible did God deliver the ten commandments to Moses?",
+        options: { A: "Exodus 20", B: "Exodus 19", C: "Exodus 17", D: "Exodus 21"},
+        answer: "A"
+      },
+      {
+        text: "What was Aquilla’s job?",
+        options: { A: "Lawyer", B: "Land Cultivator", C: "Blacksmith", D: "Tent Maker"},
+        answer: "D"
+      },
+      {
+        text: "What were the two columns called on the temple built by Solomon?",
+        options: { A: "Jakin and Boaz", B: "Troas and Carpus", C: "Hokni and Sames", D: "Zaber and Zaldes"},
+        answer: "A"
+      },
+      {
+        text: "Paul raised a woman named Dorcas from the dead",
+        options: { A: "True", B: "False"},
+        answer: "B"
+      },
+      {
+        text: "Which of these Biblical figures was not a part of the writers of 'The Psalms'?",
+        options: { A: "Solomon", B: "King David", C: "Caleb II", D: "Asaph"},
+        answer: "C"
+      },
+      {
+        text: "What was most likely the first Gospel written?",
+        options: { A: "John", B: "Matthew", C: "Luke", D: "Mark"},
+        answer: "D"
+      },
+      {
+        text: "Which human author wrote the most words in the Bible?",
+        options: { A: "Moses (125,139)", B: "Paul (125,139)", C: "Moses (150,403)", D: "Paul (150,403)"},
+        answer: "A"
+      },
+      {
+        text: "To create the plague of frogs, who stretched a rod over the waters of Egypt?",
+        options: { A: "Joab", B: "Moses", C: "Aaron", D: "Amunah"},
+        answer: "C"
+      },
+      {
+        text: "How many sections and divisions does the bible have?",
+        options: { A: "7", B: "10", C: "2", D: "8"},
+        answer: "D"
+      },
+      {
+        text: "Who let the Israelites return to their homeland?",
+        options: { A: "Cyprus", B: "Cyrus", C: "King Darius", D: "King Nebuchadnezzar"},
+        answer: "B"
+      },
+      {
+        text: "Sarah lived how many years?",
+        options: { A: "120", B: "127", C: "129", D: "130"},
+        answer: "B"
+      },
+      {
+        text: "Ahab had how many sons in Samaria?",
+        options: { A: "68", B: "47",  C: "70", D: "38"},
+        answer: "C"
+      },
+      {
+        text: "Which two rivers border Eden in modern-day Iraq?",
+        options: { 
+          A: "River Euphrates & River Anuil",
+          B: "River Argen & River Timon",
+          C: "River Euphrates & River Timon",
+          D: "River Euphrates & River Tigress"
+        },
+        answer: "D"
+      }
+];
+
+    let shuffledQuestions = [];
+    let currentQuestionIndex = 0;
+    let answers = {};
+    let viewedQuestions = new Set();
+    let timerInterval;
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function loadQuestion() {
+      const question = shuffledQuestions[currentQuestionIndex];
+      viewedQuestions.add(currentQuestionIndex); // mark this question as viewed
+
+      const container = document.getElementById('question-container');
+      const selected = answers[currentQuestionIndex];
+
+      container.innerHTML = `
+        <p>${currentQuestionIndex + 1}. ${question.text}</p>
+        ${Object.entries(question.options).map(([key, val]) =>
+          `<label><input type="radio" name="answer" value="${key}" ${selected === key ? 'checked' : ''}> ${val}</label><br>`).join('')}
+      `;
+
+      container.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+          answers[currentQuestionIndex] = radio.value;
+        });
+      });
+
+      checkViewCount();
+
+      document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+      document.getElementById('next-btn').disabled = currentQuestionIndex === shuffledQuestions.length - 1;
+    }
+
+    function checkViewCount() {
+      if (viewedQuestions.size >= 20) {
+        document.getElementById('submit-btn').style.display = 'inline-block';
+      }
+    }
+
+    function startQuiz() {
+      shuffledQuestions = [...questions];
+      shuffleArray(shuffledQuestions);
+      shuffledQuestions = shuffledQuestions.slice(0, 40);
+      loadQuestion();
+      startTimer(20 * 60);
+    }
+
+    function startTimer(duration) {
+      let timeLeft = duration;
+      const display = document.getElementById('time');
+      const bar = document.getElementById('timer-bar');
+
+      timerInterval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        display.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        const percentage = (timeLeft / duration) * 100;
+        bar.style.width = `${percentage}%`;
+
+        if (--timeLeft < 0) {
+          clearInterval(timerInterval);
+          submitQuiz();
+        }
+      }, 1000);
+    }
+
+ function submitQuiz() {
+
+  const username = localStorage.getItem("currentUser") || "Anonymous";
+  let score = 0;
+for (let index in answers) {
+  if (shuffledQuestions[index].answer === answers[index]) {
+    score++;
+  }
+}
+  const date = new Date().toLocaleString();
+
+  // Retrieve or initialize quizResults
+  let results = JSON.parse(localStorage.getItem("quizResults")) || [];
+
+  results.push({ username, score, date });
+  localStorage.setItem("quizResults", JSON.stringify(results));
+
+  window.location.href = "thankyou.html";
+}
+
+    document.getElementById('next-btn').addEventListener('click', () => {
+      if (currentQuestionIndex < shuffledQuestions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+      }
+    });
+
+    document.getElementById('prev-btn').addEventListener('click', () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        loadQuestion();
+      }
+    });
+
+    document.getElementById('submit-btn').addEventListener('click', submitQuiz);
+
+    window.addEventListener('beforeunload', () => {
+      clearInterval(timerInterval);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        clearInterval(timerInterval);
+        submitQuiz();
+      }
+    });
+
+    startQuiz();
+  </script>
+</body>
+</html>

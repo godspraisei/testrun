@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>INSTRUCTIONS</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    img.logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <img src="JHOW.png" alt="Logo" class="logo" />
+  <h1>INSTRUCTIONS</h1>
+  <h2>Please read instructions carefully before starting</h2>
+  <h5>1. Attempt all questions.</h5>
+  <h5>2. You have 40 multiple choice questions to be answered in 20mins.</h5>
+  <h5>3. The submit button reflects after 20 questions have been answered. It doesn't mean you should submit at that time, you can still continue answering.</h5>
+  <h5>4. Do not minimize or leave the site or else your test will end.</h5>
+
+  <p>GOODLUCK!</p>
+
+  <button id="Start Quiz">Start Quiz</button> 
+<script>
+  document.getElementById('Start Quiz').addEventListener('click', 
+  function() {
+    
+    alert("Are you sure you have asscimilated the instructions? If yes, click OK");
+    window.location.href = "quiz.html";
+  });
+</script>
+</body>
+</html>

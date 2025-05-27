@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <style>
+      body {
+      background-image: url(Images/JHOW.png);
+      background-color: rgba(221, 109, 29, 0.7);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+    </style>
+
+  <div class="login-container">
+    <h2>🔐Admin Login</h2>
+    <form onsubmit="loginAdmin(event)">
+      <input type="text" id="admin-username" placeholder="Username" required>
+      <input type="password" id="admin-password" placeholder="Password" required>
+      <input type="submit" value="Login">
+    </form>
+    <p id="login-error" style="color: crimson; display: none;">Invalid credentials</p>
+  </div>
+
+  <script>
+    function loginAdmin(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("admin-username").value.trim();
+      const password = document.getElementById("admin-password").value.trim();
+
+      // Replace with a better method for real use — this is basic!
+      if (username === "Godspraisei" && password === "admin1234") {
+        localStorage.setItem("adminLoggedIn", "true");
+        window.location.href = "admin-dashboard.html"; // this should be the real admin panel
+      } else {
+        document.getElementById("login-error").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>

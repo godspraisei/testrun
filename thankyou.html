@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Thank You!</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    img.logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <img src="JHOW.png" alt="Logo" class="logo" />
+  <h1>Thank You!</h1>
+  <h2>Your quiz has been successfully submitted</h2>
+  <p>We appreciate you dearly. God bless you!</p>
+
+<button id="logout-btn">🚪 Log Out</button> 
+<script>
+  document.getElementById('logout-btn').addEventListener('click', 
+  function() {
+    localStorage.removeItem('currentUser');
+
+    // Redirect to login page or home page
+    alert("You have been logged out.");
+    window.location.href = "index.html"; // Replace with your login page URL
+  });
+
+      window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.location.href = "index.html";
+    };
+</script>
+</body>
+</html>

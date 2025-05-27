@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>JHOW Bible Quiz Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-image: url(Images/JHOW.png);
+      background-color: rgba(221, 109, 29, 0.7);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .login-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .login-container h2 {
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    .login-container input[type="submit"] {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-container input[type="submit"]:hover {
+      background-color: #00b345;
+    }
+
+    #error-message {
+      color: red;
+      margin-top: 15px;
+      display: none;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="login-container">
+    <h2>Judah's House of Worship<br />Bible Quiz</h2>
+    <form id="loginForm" autocomplete="off">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="submit" value="Login" />
+    </form>
+    <p id="error-message">Invalid username or password.</p>
+  </div>
+
+  <script>
+    const users = [
+      { username: "judah", password: "smartland" },
+      { username: "jane_smith", password: "securepass456" },
+      { username: "kingdavid", password: "michelle" },
+      { username: "oluwatobi64", password: "heavenly" },
+      { username: "idemudia", password: "password"},
+      { username: "David Nansak", password: "jhow0105"},
+      { username: "Kratos", password: "jhow0126"},
+      { username: "Anathas'_", password: "jhow3334"},
+      { username: "john_d_beloved", password: "jhow5675"},
+      { username: "Anokwu_Chukwuemeka", password: "jhow0274"},
+      { username: "Racheal_", password: "jhow3748"},
+      { username: "LeBlanc", password: "jhow3508"},
+      { username: "Judahrex", password: "jhow0440"},
+      { username: "Comforter_hymdal", password: "jhow8356"},
+      { username: "Omo_Ope", password: "jhow0181"},
+
+      //Login details for admin(s)
+      { username: "Godspraisei", password: "admin1234", isAdmin: true },
+      { username: "Zamarchi", password: "admin2345", isAdmin: true },
+    ];
+
+    document.getElementById("loginForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      const user = users.find((u) => u.username === username && u.password === password);
+
+      if (user) {
+        if (user.isAdmin) {
+          localStorage.setItem("adminLoggedIn", "true");
+          window.location.href = "admin-dashboard.html";
+        } else {
+          localStorage.setItem("currentUser", username);
+          window.location.href = "instructions.html";
+        }
+      } else {
+        const errorMessage = document.getElementById("error-message");
+        errorMessage.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
