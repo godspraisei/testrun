@@ -4,6 +4,31 @@
   <meta charset="UTF-8">
   <title>Bible Quiz</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Firebase App (Core SDK) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+
+<!-- Firebase Analytics (optional, can remove if not used) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js"></script>
+
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDPuobtXyncPZr2C_jxRUvQocV_jhJEp3g",
+    authDomain: "jhow-biblequiz.firebaseapp.com",
+    projectId: "jhow-biblequiz",
+    storageBucket: "jhow-biblequiz.firebasestorage.app",
+    messagingSenderId: "430988364520",
+    appId: "1:430988364520:web:1389616fb00f7c20a7575d",
+    measurementId: "G-SX84ZLH8EW"
+  };
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
 </head>
 <body>
    <button id="submit-btn" style="float: right; margin: 20px; display: none;">Submit Quiz</button>
@@ -148,7 +173,7 @@
         text: "Apostle Paul on the Areopagus or the execution of Jacob, which happened first?",
         options: {
           A: "The execution of Judah",
-          B: "Both",
+          B: "Both happened concurrently",
           C: "The execution of Jacob",
           D: "Apostle Paul on the Areopagus",
         },
@@ -165,7 +190,7 @@
         answer: "C",
       },
       {
-        text: "Which prophet predicted a ruler out of Bethlehem Ephrathah?",
+        text: "Which prophet predicted Jesus as a ruler out of Bethlehem Ephrathah?",
         options: {
           A: "Prophet Micah",
           B: "Prophet Isaiah",
@@ -235,7 +260,7 @@
         answer: "B",
       },
       {
-        text: "Where in the bible can you find the Lord’s prayer?",
+        text: "Where in the Bible can you find the Lord’s prayer?",
         options: { A: "Matthew 3", B: "Matthew 8", C: "Matthew 5", D: "Matthew 6" },
         answer: "D",
       },
@@ -351,7 +376,7 @@
       },
       {
         text: "Who did God give his covenant of peace after he showed his zealousness for the kingdom by killing an Israelite and his concubine?",
-        options: { A: "Moses", B: "Paul", C: "Phinehas", D: "Tychicus"},
+        options: { A: "Moses", B: "Meroz", C: "Phinehas", D: "Tychicus"},
         answer: "C"
       },
       {
@@ -411,7 +436,7 @@
       },
       {
         text: "Who let the Israelites return to their homeland?",
-        options: { A: "Cyprus", B: "Cyrus", C: "King Darius", D: "King Nebuchadnezzar"},
+        options: { A: "King Cyprus", B: "King Cyrus", C: "King Darius", D: "King Nebuchadnezzar"},
         answer: "B"
       },
       {
@@ -420,7 +445,7 @@
         answer: "B"
       },
       {
-        text: "Ahab had how many sons in Samaria?",
+        text: "King Ahab had how many sons in Samaria?",
         options: { A: "68", B: "47",  C: "70", D: "38"},
         answer: "C"
       },
@@ -433,6 +458,61 @@
           D: "River Euphrates & River Tigress"
         },
         answer: "D"
+      },
+      {
+        text: "Who was the firstborn of Ephratah, who is known as the father of Bethlehem?",
+        options: { A: "Penuel", B: "Hur", C: "Tekoa", D: "Jabez"},
+        answer: "B"
+      },
+      {
+        text: "In the parable of the great supper, the man bade his friends to come; but they made different excuses. Which of these is not an excuse made by any of them?",
+        options: {
+          A: "My brother's wife is sick, i must needs go and see her...",
+          B: "I just bought a piece of land, i must needs go and check it...",
+          C: "I just bought some oxens, i must needs go and prove them...",
+          D: "I just got married, so i cannot come..."
+        },
+        answer: "A"
+      },
+      {
+        text: "Which of these was struck by God for indirect murder which he committed because he didn't want to impregnate his dead brother's wife?",
+        options: { A: "Shuah", B: "Uzzah", C: "Onan", D: "Er"},
+        answer: "C"
+      },
+      {
+        text: "'Lamentations' is a collection of how many poems describing Jerusalem's destruction?",
+        options: { A: "8", B: "7", C: "3", D: "5"},
+        answer: "D"
+      },
+      {
+        text: "Who did King Nebuchadnezzar appoint to execute all the wise men?",
+        options: { A: "Tychicus", B: "Ashpenaz", C: "Arioch", D: "Kezia"},
+        answer: "C"
+      },
+      {
+        text: "In the Scriptures, the Chaldeans were known to be astrologers",
+        options: { A: "True", B: "False"},
+        answer: "A"
+      },
+      {
+        text: "What does 'TEKEL' mean?",
+        options: {
+          A: "The Kingdom is divided, and given to the Persians",
+          B: "You are weighed in a balance, and found wanting",
+          C: "God has numbered your Kingdom, and finished it",
+          D: "Your reward has been withheld, and given to another"
+        },
+        answer: "B"
+      },
+      {
+        text: "King Josiah began to repair and rid Judah and Jerusalem of idols at which age?",
+        options: { A: "30", B: "8", C: "16", D: "20"},
+        answer: "D"
+      },
+      {
+        text: "Which of King Xerxes' chamberlains told him about the gallow Haman had built?",
+        options: { A: "Harbonah", B: "Shaphan", C: "Annas", D: "Ashpenaz"},
+        answer: "A"
       }
 ];
 
@@ -503,29 +583,39 @@
 
         if (--timeLeft < 0) {
           clearInterval(timerInterval);
+          alert("Time up");
           submitQuiz();
         }
       }, 1000);
     }
 
- function submitQuiz() {
-
+function submitQuiz() {
   const username = localStorage.getItem("currentUser") || "Anonymous";
   let score = 0;
-for (let index in answers) {
-  if (shuffledQuestions[index].answer === answers[index]) {
-    score++;
+
+  for (let index in answers) {
+    if (shuffledQuestions[index].answer === answers[index]) {
+      score++;
+    }
   }
-}
+
   const date = new Date().toLocaleString();
 
-  // Retrieve or initialize quizResults
-  let results = JSON.parse(localStorage.getItem("quizResults")) || [];
-
-  results.push({ username, score, date });
-  localStorage.setItem("quizResults", JSON.stringify(results));
-
-  window.location.href = "thankyou.html";
+  // Save to Firestore instead of localStorage
+  db.collection("quizResults").add({
+    username: username,
+    score: score,
+    date: date
+  })
+  .then(() => {
+    console.log("Result saved to Firebase!");
+    window.location.href = "thankyou.html";
+  })
+  
+  .catch((error) => {
+    console.error("Error saving to Firebase:", error);
+    alert("Failed to save result. Please check your internet connection.");
+  });
 }
 
     document.getElementById('next-btn').addEventListener('click', () => {
