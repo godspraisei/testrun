@@ -4,31 +4,6 @@
   <meta charset="UTF-8">
   <title>Bible Quiz</title>
   <link rel="stylesheet" href="style.css">
-  <!-- Firebase App (Core SDK) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-
-<!-- Firebase Analytics (optional, can remove if not used) -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js"></script>
-
-<!-- Firebase Firestore -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
-
-<script>
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDPuobtXyncPZr2C_jxRUvQocV_jhJEp3g",
-    authDomain: "jhow-biblequiz.firebaseapp.com",
-    projectId: "jhow-biblequiz",
-    storageBucket: "jhow-biblequiz.firebasestorage.app",
-    messagingSenderId: "430988364520",
-    appId: "1:430988364520:web:1389616fb00f7c20a7575d",
-    measurementId: "G-SX84ZLH8EW"
-  };
-
-  // Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-</script>
 </head>
 <body>
    <button id="submit-btn" style="float: right; margin: 20px; display: none;">Submit Quiz</button>
@@ -38,7 +13,7 @@
       <div class="timer-container">
         <div class="timer-bar" id="timer-bar"></div>
       </div>
-      <p id="timer"><span id="time">20:00</span></p>
+      <p id="timer"><span id="time">15:00</span></p>
     </div>
 
     <div id="quiz-container">
@@ -57,7 +32,7 @@
       {
         text: "How many children did Judah have?",
         options: { A: "3", B: "4", C: "5", D: "6" },
-        answer: "B",
+        answer: "C",
       },
       {
         text: "Who was Jesus' grandfather?",
@@ -440,7 +415,7 @@
         answer: "B"
       },
       {
-        text: "Sarah lived how many years?",
+        text: "Sarah lived for how many years?",
         options: { A: "120", B: "127", C: "129", D: "130"},
         answer: "B"
       },
@@ -513,7 +488,17 @@
         text: "Which of King Xerxes' chamberlains told him about the gallow Haman had built?",
         options: { A: "Harbonah", B: "Shaphan", C: "Annas", D: "Ashpenaz"},
         answer: "A"
-      }
+      },
+      {
+        text: "Why were all the Kings and people of Israel carried away into Babylon?",
+        options: { A: "For their Father's sins", B: "For their sins", C: "To appease God's anger", D: "Because the devil hated them"},
+        answer: "B"
+      },
+      {
+        text: "Benjamin's Firstborn was called?",
+        options: { A: "Harbonah", B: "Ashbel", C: "Bela", D: "Zichri"},
+        answer: "C"
+      },
 ];
 
     let shuffledQuestions = [];
@@ -565,7 +550,7 @@
       shuffleArray(shuffledQuestions);
       shuffledQuestions = shuffledQuestions.slice(0, 40);
       loadQuestion();
-      startTimer(20 * 60);
+      startTimer(15 * 60);
     }
 
     function startTimer(duration) {
@@ -589,33 +574,28 @@
       }, 1000);
     }
 
-function submitQuiz() {
+ function submitQuiz() {
   const username = localStorage.getItem("currentUser") || "Anonymous";
   let score = 0;
-
-  for (let index in answers) {
-    if (shuffledQuestions[index].answer === answers[index]) {
-      score++;
-    }
+for (let index in answers) {
+  if (shuffledQuestions[index].answer === answers[index]) {
+    score++;
   }
-
+}
   const date = new Date().toLocaleString();
 
-  // Save to Firestore instead of localStorage
-  db.collection("quizResults").add({
-    username: username,
-    score: score,
-    date: date
-  })
-  .then(() => {
-    console.log("Result saved to Firebase!");
-    window.location.href = "thankyou.html";
-  })
-  
-  .catch((error) => {
-    console.error("Error saving to Firebase:", error);
-    alert("Failed to save result. Please check your internet connection.");
-  });
+  // Retrieve or initialize quizResults
+  let results = JSON.parse(localStorage.getItem("quizResults")) || [];
+
+  const exists = results.some(
+    (entry) => entry.username === username && entry.date === date
+  );
+  if (!exists) {
+
+  results.push({ username, score, date });
+  localStorage.setItem("quizResults", JSON.stringify(results));
+  }
+  window.location.href = "thankyou.html";
 }
 
     document.getElementById('next-btn').addEventListener('click', () => {
