@@ -7,12 +7,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <style> 
+     body {
+      background-image: url(Images/JHOW.png);
+      background-color: rgba(221, 109, 29, 0.7);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+  </style>
   <div class="admin-dashboard">
     <header>
       <h1>📊 Admin Dashboard</h1>
       <button onclick="logoutAdmin()">🚪 Log Out</button>
     </header>
-
     <section class="dashboard-content">
       <div class="card">
         <h2>All Quiz Results</h2>
@@ -39,12 +52,12 @@
       </div>
 
       <div class="card">
-<button onclick="exportResults()">Export CSV</button>
-<button onclick="resetAllData()">Reset All Data</button>
+        <button onclick="resetAllData()">🗑️ Reset All Quiz Data</button>
+        <button onclick="exportResults()">📥 Download Results</button>
+        <button onclick="refresh()">Refresh</button>
       </div>
     </section>
   </div>
-
   <script src="admin.js"></script>
 </body>
 </html>
