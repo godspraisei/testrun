@@ -81,14 +81,13 @@ h1, h2 {
   margin-bottom: 20px;
 }
 
+h5 {
+  text-align: center;
+}
+
 ul {
   text-align: left;
   margin-top: 10px;
-}
-
-.submit-btn {
-  background-color: #ff9c1a;
-  width: 30%;
 }
 
 body {
@@ -120,7 +119,7 @@ header h1 {
 }
 
 header button {
-  background-color: #ff4d4d;
+  background-color: #e04343;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -130,7 +129,7 @@ header button {
 }
 
 header button:hover {
-  background-color: #e04343;
+  background-color: #0d7204;
 }
 
 .dashboard-content {
@@ -159,8 +158,8 @@ table {
   margin-top: 10px;
 }
 
-.submit-btn {
-  color: #e67e22;
+button.submit-btn {
+  color: #e67a1b;
 }
 
 table th, table td {
@@ -188,12 +187,13 @@ button:hover {
   background-color: #45a049;
 }
 
-    button.reset-btn {
-      background-color: crimson;
-      margin-top: 10px;
-    }
-    button.reset-btn:hover {
-      background-color: #a00000;
+button.reset-btn {
+  background-color: crimson;
+  margin-top: 10px;
+}
+
+button.reset-btn:hover {
+  background-color: #a00000;
     }
 
 h5 {
