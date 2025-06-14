@@ -22,6 +22,16 @@
   <h2>Your quiz has been successfully submitted</h2>
   <p>We appreciate you dearly. God bless you!</p>
 
+
+<button id="check-my-result">📝Check Result</button>
+<script>
+  document.getElementById('check-my-result').addEventListener('click',
+  function() {
+    alert("Redirecting");
+    window.location.href = "check-results.html";
+  });
+</script>
+
 <button id="logout-btn">🚪 Log Out</button> 
 <script>
   document.getElementById('logout-btn').addEventListener('click', 
