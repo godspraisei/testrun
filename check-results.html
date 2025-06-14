@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Result</title>
+  <link rel="stylesheet" href="style.css">
+    <body>
+      <img src="JHOW.png" alt="Logo" class="logo" />
+  <style>
+    body {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    img.logo {
+      width: 100px;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+        <div class="check-my-result">
+        <header>
+        <section class="dashboard-content">
+      <div class="card">
+        <h2>My Result</h2>
+        <table id="results-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Score</th>
+              <th>Date</th>
+              <th>Percentage %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Results will be populated here -->
+          </tbody>
+        </table>
+      </div>
+<script>
+  // Load quiz results
+const results = JSON.parse(localStorage.getItem("quizResults")) || [];
+const resultsTableBody = document.querySelector("#results-table tbody");
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+}
+
+results.forEach((result, index) => {
+  const row = document.createElement("tr");
+  row.innerHTML = `
+    <td>${index + 1}</td>
+    <td>${result.username}</td>
+    <td>${result.score}</td>
+    <td>${formatDate(result.date)}</td>
+    <td>${((result.score / 40) * 100).toFixed(1)}% </td>
+
+  `;
+  resultsTableBody.appendChild(row);
+});
+
+</script>
+
+  <button onclick = "logout_btn()"  style="float: right; margin: auto; display: box;">🚪 Log Out</button>
+<script>
+  function logout_btn(){
+    localStorage.removeItem('currentUser');
+    alert("You have been logged out.");
+    window.location.href = "index.html";
+  }; 
+</script>
+
+  <button onclick="refresh()"  style="float: right; margin: auto; display: box; border-color: limegreen; ">Refresh</button>
+  <script>
+    function refresh() {
+      window.location.reload();
+}
+  </script>
+ </body>
+ </head>
+</html>
