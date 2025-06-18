@@ -8,7 +8,7 @@
 <body>
     <style>
       body {
-      background-image: url(Images/JHOW.png);
+      background-image: img src="JHOW.png";
       background-color: rgba(221, 109, 29, 0.7);
       background-size: cover;
       background-position: center;
@@ -38,14 +38,21 @@
       const username = document.getElementById("admin-username").value.trim();
       const password = document.getElementById("admin-password").value.trim();
 
-      // Replace with a better method for real use — this is basic!
-      if (username === "Godspraisei" && password === "admin1234") {
-        localStorage.setItem("adminLoggedIn", "true");
-        window.location.href = "admin-dashboard.html"; // this should be the real admin panel
-      } else {
-        document.getElementById("login-error").style.display = "block";
-      }
-    }
+// List of valid admins
+const admins = [
+  { username: "Godspraisei", password: "admin1234" },
+  { username: "Zamarchi", password: "admin2345" } // add more here if needed
+];
+
+// Check if login is valid
+const validAdmin = admins.find(admin => admin.username === username && admin.password === password);
+
+if (validAdmin) {
+  localStorage.setItem("adminLoggedIn", "true");
+  window.location.href = "admin-dashboard.html";
+} else {
+  document.getElementById("login-error").style.display = "block";
+}}
   </script>
 </body>
 </html>
